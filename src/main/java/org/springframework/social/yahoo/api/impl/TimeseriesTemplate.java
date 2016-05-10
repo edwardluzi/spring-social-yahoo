@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.social.yahoo.api.Timeseries;
+import org.springframework.social.yahoo.api.Timeseries.Query;
 import org.springframework.social.yahoo.api.Timeseries.Quote;
 import org.springframework.social.yahoo.api.TimeseriesOperations;
 import org.springframework.util.LinkedMultiValueMap;
@@ -15,7 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 class TimeseriesTemplate extends AbstractTemplate implements TimeseriesOperations
 {
-	private static final String sql = "select * from yahoo.finance.historicaldata where symbol =\"%s\" and startDate = \"%s\" and endDate = \"%s\"";
+	private static final String sql = "select * from yahoo.finance.historicaldata where symbol = \"%s\" and startDate = \"%s\" and endDate = \"%s\"";
 	private static final String environment = "store://datatables.org/alltableswithkeys";
 	private static final String format = "json";
 
@@ -46,7 +47,12 @@ class TimeseriesTemplate extends AbstractTemplate implements TimeseriesOperation
 
 		try
 		{
-			quotes = wrapper.getQuery().getResults().getQuote();
+			Query q = wrapper.getQuery();
+
+			if (q.getCount() > 0)
+			{
+				quotes = q.getResults().getQuote();
+			}
 		}
 		catch (Exception e)
 		{

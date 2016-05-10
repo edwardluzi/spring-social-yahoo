@@ -1,7 +1,6 @@
 package org.springframework.social.yahoo.api;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.List;
 
 public interface Timeseries
@@ -76,7 +75,7 @@ public interface Timeseries
 		}
 	}
 
-	public	class Results extends YahooObject implements Serializable
+	public class Results extends YahooObject implements Serializable
 	{
 		private static final long serialVersionUID = 5300093125284344989L;
 
@@ -101,17 +100,17 @@ public interface Timeseries
 
 		private String date;
 
-		private BigDecimal open;
+		private double open;
 
-		private BigDecimal high;
+		private double high;
 
-		private BigDecimal low;
+		private double low;
 
-		private BigDecimal close;
+		private double close;
 
-		private BigDecimal volume;
+		private double volume;
 
-		private BigDecimal adjClose;
+		private double adjClose;
 
 		public String getSymbol()
 		{
@@ -133,62 +132,62 @@ public interface Timeseries
 			this.date = date;
 		}
 
-		public BigDecimal getOpen()
+		public double getOpen()
 		{
 			return open;
 		}
 
-		public void setOpen(BigDecimal open)
+		public void setOpen(double open)
 		{
 			this.open = open;
 		}
 
-		public BigDecimal getHigh()
+		public double getHigh()
 		{
 			return high;
 		}
 
-		public void setHigh(BigDecimal high)
+		public void setHigh(double high)
 		{
 			this.high = high;
 		}
 
-		public BigDecimal getLow()
+		public double getLow()
 		{
 			return low;
 		}
 
-		public void setLow(BigDecimal low)
+		public void setLow(double low)
 		{
 			this.low = low;
 		}
 
-		public BigDecimal getClose()
+		public double getClose()
 		{
 			return close;
 		}
 
-		public void setClose(BigDecimal close)
+		public void setClose(double close)
 		{
 			this.close = close;
 		}
 
-		public BigDecimal getVolume()
+		public double getVolume()
 		{
 			return volume;
 		}
 
-		public void setVolume(BigDecimal volume)
+		public void setVolume(double volume)
 		{
 			this.volume = volume;
 		}
 
-		public BigDecimal getAdjClose()
+		public double getAdjClose()
 		{
 			return adjClose;
 		}
 
-		public void setAdjClose(BigDecimal adjClose)
+		public void setAdjClose(double adjClose)
 		{
 			this.adjClose = adjClose;
 		}

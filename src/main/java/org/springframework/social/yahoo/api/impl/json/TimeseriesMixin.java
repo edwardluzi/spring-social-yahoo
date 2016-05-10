@@ -1,6 +1,5 @@
 package org.springframework.social.yahoo.api.impl.json;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.social.yahoo.api.Timeseries;
@@ -45,16 +44,16 @@ class TimeseriesMixin
 		@JsonProperty("Date")
 		String date;
 		@JsonProperty("Open")
-		BigDecimal open;
+		double open;
 		@JsonProperty("High")
-		BigDecimal high;
+		double high;
 		@JsonProperty("Low")
-		BigDecimal low;
+		double low;
 		@JsonProperty("Close")
-		BigDecimal close;
+		double close;
 		@JsonProperty("Volume")
-		BigDecimal volume;
+		double volume;
 		@JsonProperty("Adj_Close")
-		BigDecimal adjClose;
+		double adjClose;
 	}
 }
