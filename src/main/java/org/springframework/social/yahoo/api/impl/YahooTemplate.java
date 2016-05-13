@@ -1,10 +1,11 @@
 package org.springframework.social.yahoo.api.impl;
 
-
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.social.oauth2.AbstractOAuth2ApiBinding;
 import org.springframework.social.support.ClientHttpRequestFactorySelector;
+import org.springframework.social.yahoo.api.BriefQuoteOperations;
+import org.springframework.social.yahoo.api.DetailQuoteOperations;
 import org.springframework.social.yahoo.api.TimeseriesOperations;
 import org.springframework.social.yahoo.api.Yahoo;
 import org.springframework.social.yahoo.api.impl.json.YahooModule;
@@ -16,6 +17,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class YahooTemplate extends AbstractOAuth2ApiBinding implements Yahoo
 {
 	private TimeseriesOperations timeseriesOperations;
+	private BriefQuoteOperations briefQuoteOperations;
+	private DetailQuoteOperations detailQuoteOperations;
 	private ObjectMapper objectMapper;
 
 	public YahooTemplate(String accessToken)
@@ -32,6 +35,16 @@ public class YahooTemplate extends AbstractOAuth2ApiBinding implements Yahoo
 	public TimeseriesOperations timeseriesOperations()
 	{
 		return timeseriesOperations;
+	}
+
+	public BriefQuoteOperations briefQuoteOperations()
+	{
+		return briefQuoteOperations;
+	}
+
+	public DetailQuoteOperations detailQuoteOperations()
+	{
+		return detailQuoteOperations;
 	}
 
 	public RestOperations restOperations()
@@ -81,6 +94,12 @@ public class YahooTemplate extends AbstractOAuth2ApiBinding implements Yahoo
 	private void initSubApis()
 	{
 		this.timeseriesOperations = new TimeseriesTemplate(getRestTemplate(), objectMapper,
+				isAuthorized());
+
+		this.briefQuoteOperations = new BriefQuoteTemplate(getRestTemplate(), objectMapper,
+				isAuthorized());
+
+		this.detailQuoteOperations = new DetailQuoteTemplate(getRestTemplate(), objectMapper,
 				isAuthorized());
 	}
 }

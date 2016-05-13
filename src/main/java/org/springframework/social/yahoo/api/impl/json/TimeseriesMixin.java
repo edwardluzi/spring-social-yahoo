@@ -1,7 +1,5 @@
 package org.springframework.social.yahoo.api.impl.json;
 
-import java.util.List;
-
 import org.springframework.social.yahoo.api.Timeseries;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -10,30 +8,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 class TimeseriesMixin
 {
 	@JsonIgnoreProperties(ignoreUnknown = true)
-	abstract class WrapperMixin extends YahooObjectMixin
+	abstract class WrapperMixin extends GenericWrapperMixin<Timeseries.Query>
 	{
-		@JsonProperty("query")
-		Timeseries.Query query;
 	}
 
 	@JsonIgnoreProperties(ignoreUnknown = true)
-	abstract class QueryMixin extends YahooObjectMixin
+	abstract class QueryMixin extends GenericQueryMixin<Timeseries.Results>
 	{
-		@JsonProperty("count")
-		Integer count;
-		@JsonProperty("created")
-		String created;
-		@JsonProperty("lang")
-		String lang;
-		@JsonProperty("results")
-		Timeseries.Results results;
 	}
 
 	@JsonIgnoreProperties(ignoreUnknown = true)
-	abstract class ResultsMixin extends YahooObjectMixin
+	abstract class ResultsMixin extends GenericResultsMixin<Timeseries.Quote>
 	{
-		@JsonProperty("quote")
-		List<Timeseries.Quote> quote;
 	}
 
 	@JsonIgnoreProperties(ignoreUnknown = true)

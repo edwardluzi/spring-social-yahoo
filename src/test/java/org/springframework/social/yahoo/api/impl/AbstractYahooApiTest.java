@@ -1,8 +1,6 @@
 package org.springframework.social.yahoo.api.impl;
 
-
 import org.junit.Before;
-
 
 public class AbstractYahooApiTest
 {

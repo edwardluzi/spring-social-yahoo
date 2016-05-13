@@ -1,95 +1,22 @@
 package org.springframework.social.yahoo.api;
 
 import java.io.Serializable;
-import java.util.List;
 
 public interface Timeseries
 {
-	public class Wrapper extends YahooObject implements Serializable
+	public class Wrapper extends GenericWrapper<Query>
 	{
-		private static final long serialVersionUID = -608818125778803861L;
-
-		private Query query;
-
-		public Query getQuery()
-		{
-			return query;
-		}
-
-		public void setQuery(Query query)
-		{
-			this.query = query;
-		}
+		private static final long serialVersionUID = -201846175688566282L;
 	}
 
-	public class Query extends YahooObject implements Serializable
+	public class Query extends GenericQuery<Results>
 	{
-		private static final long serialVersionUID = 7449812018996526556L;
-
-		private Integer count;
-
-		private String created;
-
-		private String lang;
-
-		private Results results;
-
-		public Integer getCount()
-		{
-			return count;
-		}
-
-		public void setCount(Integer count)
-		{
-			this.count = count;
-		}
-
-		public String getCreated()
-		{
-			return created;
-		}
-
-		public void setCreated(String created)
-		{
-			this.created = created;
-		}
-
-		public String getLang()
-		{
-			return lang;
-		}
-
-		public void setLang(String lang)
-		{
-			this.lang = lang;
-		}
-
-		public Results getResults()
-		{
-			return results;
-		}
-
-		public void setResults(Results results)
-		{
-			this.results = results;
-		}
+		private static final long serialVersionUID = 6632239858447754557L;
 	}
 
-	public class Results extends YahooObject implements Serializable
+	public class Results extends GenericResults<Quote>
 	{
-		private static final long serialVersionUID = 5300093125284344989L;
-
-		private List<Quote> quote;
-
-		public List<Quote> getQuote()
-		{
-			return quote;
-		}
-
-		public void setQuote(List<Quote> quote)
-		{
-			this.quote = quote;
-		}
+		private static final long serialVersionUID = 1236344281228167273L;
 	}
 
 	public class Quote extends YahooObject implements Serializable
