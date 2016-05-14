@@ -24,9 +24,31 @@ public class YahooErrorHandler extends DefaultResponseErrorHandler
 
 		if (statusCode.series().equals(HttpStatus.Series.CLIENT_ERROR))
 		{
-			String message = errorDetails.containsKey("error") ? (String) errorDetails.get("error")
-					: "Unknown error";
-			throw new UncategorizedApiException("yahoo", message, null);
+			String errorMessage = "Unknown error";
+
+			if (errorDetails.containsKey("error"))
+			{
+				Object errorObject = errorDetails.get("error");
+
+				if (errorObject instanceof String)
+				{
+					errorMessage = errorObject.toString();
+				}
+
+				else if (errorObject instanceof Map)
+				{
+					ObjectMapper om = new ObjectMapper();
+					Map<String, Object> mappedObject = om.convertValue(errorObject,
+							new TypeReference<Map<String, Object>>() {});
+
+					if (mappedObject.containsKey("description"))
+					{
+						errorMessage = mappedObject.get("description").toString();
+					}
+				}
+			}
+
+			throw new UncategorizedApiException("yahoo", errorMessage, null);
 		}
 
 		handleUncategorizedError(response);

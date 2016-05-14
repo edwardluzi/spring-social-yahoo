@@ -36,5 +36,43 @@ public class TimeseriesTest extends AbstractYahooApiTest
 		assertNotNull(quotes);
 
 		assert (quotes.size() > 400);
+
+		for (Timeseries.Quote q : quotes)
+		{
+			assert (q.getVolume() > 10);
+			
+			if (q.getVolume() <= 10)
+			{
+				System.out.print(q.getDate());
+			}
+		}
+	}
+
+	@Test
+	public void testNullVolume()
+	{
+		Calendar to = Calendar.getInstance();
+		Calendar from = (Calendar) to.clone();
+		from.add(Calendar.YEAR, -3);
+
+		testNullVolume("000651.SZ", from, to);
+		testNullVolume("000002.SZ", from, to);
+		testNullVolume("000001.SZ", from, to);
+	}
+
+	private void testNullVolume(String symbol, Calendar from, Calendar to)
+	{
+		List<Timeseries.Quote> quotes = yahoo.timeseriesOperations()
+				.getTimeseries(symbol, from, to);
+
+		assertNotNull(quotes);
+
+		for (Timeseries.Quote q : quotes)
+		{
+			if (q.getVolume() <= 10)
+			{
+				System.out.print(q.getDate());
+			}
+		}
 	}
 }
