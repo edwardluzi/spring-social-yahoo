@@ -57,8 +57,6 @@ public class YahooTemplate extends AbstractOAuth1ApiBinding implements Yahoo
 		return objectMapper;
 	}
 	
-	
-
 	@Override
 	public void setRequestFactory(ClientHttpRequestFactory requestFactory)
 	{

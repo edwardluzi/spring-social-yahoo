@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 abstract class AbstractTemplate
 {
-	private static final String API_URL_BASE = "http://query.yahooapis.com/v1/public/yql";
+	private static final String API_URL_BASE = "http://query.yahooapis.com/v1/yql";
 
 	private final RestOperations restOperations;
 	private final ObjectMapper objectMapper;

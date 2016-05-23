@@ -9,7 +9,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.social.oauth1.OAuthToken;
-import org.springframework.social.yahoo.api.Yahoo;
 import org.springframework.social.yahoo.connect.YahooServiceProvider;
 
 @ComponentScan(basePackages = "org.springframework.social.yahoo")
@@ -37,17 +36,13 @@ public class ServiceProviderTest
 	@Test
 	public void testConnect()
 	{
-		String consumerKey = environment.getProperty("yahoo.consumerKey");
-		String consumerSecret = environment.getProperty("yahoo.consumerSecret");
+		String consumerKey = environment.getProperty("social.yahoo.consumerKey");
+		String consumerSecret = environment.getProperty("social.yahoo.consumerSecret");
 
 		YahooServiceProvider provider = new YahooServiceProvider(consumerKey, consumerSecret);
 
-		OAuthToken token = provider.getOAuthOperations().fetchRequestToken("oob", null);
+		OAuthToken requestToken = provider.getOAuthOperations().fetchRequestToken("oob", null);
 
-		assertNotNull(token);
-
-		Yahoo yahoo = provider.getApi(token.getValue(), token.getSecret());
-
-		assertNotNull(yahoo);
+		assertNotNull(requestToken);
 	}
 }

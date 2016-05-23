@@ -42,8 +42,6 @@ public class TimeseriesTest extends AbstractYahooApiTest
 
 		for (Timeseries.Quote q : quotes)
 		{
-			assert (q.getVolume() > 10);
-
 			if (q.getVolume() <= 10)
 			{
 				logger.error(q.getSymbol() + " " + q.getDate());

@@ -1,14 +1,12 @@
 package org.springframework.social.yahoo.api.impl;
 
+import org.junit.After;
 import org.junit.Before;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.social.oauth1.OAuthToken;
 import org.springframework.social.yahoo.api.Yahoo;
-import org.springframework.social.yahoo.api.connect.ServiceProviderTest;
-import org.springframework.social.yahoo.connect.YahooServiceProvider;
 
 @ComponentScan(basePackages = "org.springframework.social.yahoo")
 @PropertySource("classpath:application.properties")
@@ -22,20 +20,25 @@ public class AbstractYahooApiTest
 	@Before
 	public void setup()
 	{
-		this.applicationContext = new AnnotationConfigApplicationContext(ServiceProviderTest.class);
+		this.applicationContext = new AnnotationConfigApplicationContext(AbstractYahooApiTest.class);
 		this.environment = this.applicationContext.getEnvironment();
 
 		this.yahoo = createYahooTemplate();
 	}
 
+	@After
+	public void tearDown()
+	{
+		if (this.applicationContext != null)
+		{
+			this.applicationContext.close();
+		}
+	}
+
 	protected Yahoo createYahooTemplate()
 	{
-		String consumerKey = environment.getProperty("yahoo.consumerKey");
-		String consumerSecret = environment.getProperty("yahoo.consumerSecret");
-
-		YahooServiceProvider provider = new YahooServiceProvider(consumerKey, consumerSecret);
-		OAuthToken token = provider.getOAuthOperations().fetchRequestToken("oob", null);
-
-		return provider.getApi(token.getValue(), token.getSecret());
+		String consumerKey = environment.getProperty("social.yahoo.consumerKey");
+		String consumerSecret = environment.getProperty("social.yahoo.consumerSecret");
+		return new YahooTemplate(consumerKey, consumerSecret, "", "");
 	}
 }
