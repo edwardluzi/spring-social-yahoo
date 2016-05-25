@@ -21,12 +21,13 @@ public class YahooTemplate extends AbstractOAuth1ApiBinding implements Yahoo
 	private DetailQuoteOperations detailQuoteOperations;
 	private ObjectMapper objectMapper;
 
-	public YahooTemplate(String consumerKey, String consumerSecret, String accessToken, String accessTokenSecret)
+	public YahooTemplate(String consumerKey, String consumerSecret, String accessToken,
+			String accessTokenSecret)
 	{
 		super(consumerKey, consumerSecret, accessToken, accessTokenSecret);
 		initialize();
 	}
-	
+
 	public YahooTemplate()
 	{
 		initialize();
@@ -56,7 +57,7 @@ public class YahooTemplate extends AbstractOAuth1ApiBinding implements Yahoo
 	{
 		return objectMapper;
 	}
-	
+
 	@Override
 	public void setRequestFactory(ClientHttpRequestFactory requestFactory)
 	{
@@ -103,5 +104,4 @@ public class YahooTemplate extends AbstractOAuth1ApiBinding implements Yahoo
 				isAuthorized());
 	}
 
-	
 }

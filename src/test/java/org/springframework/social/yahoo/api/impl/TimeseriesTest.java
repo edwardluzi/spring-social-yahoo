@@ -59,7 +59,7 @@ public class TimeseriesTest extends AbstractYahooApiTest
 		Calendar to = Calendar.getInstance();
 		Calendar from = (Calendar) to.clone();
 		from.add(Calendar.YEAR, -1);
-		
+
 		sleep();
 		testNullVolume("600036.SS", from, to);
 
@@ -81,7 +81,7 @@ public class TimeseriesTest extends AbstractYahooApiTest
 		}
 		catch (InterruptedException e)
 		{
-			e.printStackTrace();
+			logger.error(e);
 		}
 	}
 

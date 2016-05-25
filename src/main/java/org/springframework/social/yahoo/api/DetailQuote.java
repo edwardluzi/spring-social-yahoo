@@ -683,7 +683,8 @@ public interface DetailQuote
 			return ChangeFromTwoHundreddayMovingAverage;
 		}
 
-		public void setChangeFromTwoHundreddayMovingAverage(double changeFromTwoHundreddayMovingAverage)
+		public void setChangeFromTwoHundreddayMovingAverage(
+				double changeFromTwoHundreddayMovingAverage)
 		{
 			ChangeFromTwoHundreddayMovingAverage = changeFromTwoHundreddayMovingAverage;
 		}
@@ -714,7 +715,8 @@ public interface DetailQuote
 			return PercentChangeFromFiftydayMovingAverage;
 		}
 
-		public void setPercentChangeFromFiftydayMovingAverage(String percentChangeFromFiftydayMovingAverage)
+		public void setPercentChangeFromFiftydayMovingAverage(
+				String percentChangeFromFiftydayMovingAverage)
 		{
 			PercentChangeFromFiftydayMovingAverage = percentChangeFromFiftydayMovingAverage;
 		}

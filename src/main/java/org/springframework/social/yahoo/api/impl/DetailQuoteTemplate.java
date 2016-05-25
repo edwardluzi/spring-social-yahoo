@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.log4j.Logger;
 import org.springframework.social.yahoo.api.DetailQuote;
 import org.springframework.social.yahoo.api.DetailQuoteOperations;
 import org.springframework.util.LinkedMultiValueMap;
@@ -15,6 +16,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class DetailQuoteTemplate extends AbstractTemplate implements DetailQuoteOperations
 {
+	private static final Logger logger = Logger.getLogger(DetailQuoteTemplate.class);
+
 	private static final String sql = "select * from yahoo.finance.quotes where symbol in (%s) ";
 	private static final String environment = "store://datatables.org/alltableswithkeys";
 	private static final String format = "json";
@@ -68,7 +71,7 @@ public class DetailQuoteTemplate extends AbstractTemplate implements DetailQuote
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			logger.error(e);
 		}
 
 		return quotes;

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.social.yahoo.api.Timeseries;
 import org.springframework.social.yahoo.api.Timeseries.Query;
 import org.springframework.social.yahoo.api.Timeseries.Quote;
@@ -16,8 +17,10 @@ import org.springframework.web.client.RestOperations;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-class TimeseriesTemplate extends AbstractTemplate implements TimeseriesOperations
+public class TimeseriesTemplate extends AbstractTemplate implements TimeseriesOperations
 {
+	private static final Logger logger = Logger.getLogger(TimeseriesTemplate.class);
+
 	private static final String sql = "select * from yahoo.finance.historicaldata where symbol = \"%s\" and startDate = \"%s\" and endDate = \"%s\"";
 	private static final String environment = "store://datatables.org/alltableswithkeys";
 	private static final String format = "json";
@@ -93,7 +96,7 @@ class TimeseriesTemplate extends AbstractTemplate implements TimeseriesOperation
 		}
 		catch (ParseException e)
 		{
-			e.printStackTrace();
+			logger.error(e);
 		}
 
 		return date;
@@ -126,7 +129,7 @@ class TimeseriesTemplate extends AbstractTemplate implements TimeseriesOperation
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			logger.error(e);
 		}
 
 		return quotes;

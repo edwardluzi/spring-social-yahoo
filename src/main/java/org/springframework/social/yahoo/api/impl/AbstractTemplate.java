@@ -9,7 +9,7 @@ import org.springframework.web.client.RestOperations;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-abstract class AbstractTemplate
+public abstract class AbstractTemplate
 {
 	private static final String API_URL_BASE = "http://query.yahooapis.com/v1/yql";
 

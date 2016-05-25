@@ -8,7 +8,7 @@ public interface Yahoo extends ApiBinding
 	TimeseriesOperations timeseriesOperations();
 
 	BriefQuoteOperations briefQuoteOperations();
-	
+
 	DetailQuoteOperations detailQuoteOperations();
 
 	RestOperations restOperations();
