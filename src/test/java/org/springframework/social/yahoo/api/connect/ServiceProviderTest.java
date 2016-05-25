@@ -2,6 +2,7 @@ package org.springframework.social.yahoo.api.connect;
 
 import static org.junit.Assert.assertNotNull;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -25,6 +26,7 @@ public class ServiceProviderTest
 		this.environment = this.applicationContext.getEnvironment();
 	}
 
+	@After
 	public void tearDown()
 	{
 		if (this.applicationContext != null)

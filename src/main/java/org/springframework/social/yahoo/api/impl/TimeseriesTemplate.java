@@ -32,33 +32,24 @@ class TimeseriesTemplate extends AbstractTemplate implements TimeseriesOperation
 
 	public List<Quote> getTimeseries(String symbol, Calendar from, Calendar to)
 	{
-		if (daysBetween(from, to) > 366)
+		List<Timeseries.Quote> quotes = new ArrayList<>();
+
+		Calendar newTo = (Calendar) to.clone();
+
+		for (;;)
 		{
-			List<Timeseries.Quote> quotes = new ArrayList<>();
-
-			Calendar newFrom = (Calendar) to.clone();
-			Calendar newTo = (Calendar) to.clone();
-
-			newFrom.add(Calendar.YEAR, -1);
-
-			do
+			if (daysBetween(from, newTo) > 366)
 			{
+				Calendar newFrom = (Calendar) newTo.clone();
+				newFrom.add(Calendar.DAY_OF_MONTH, -300);
+
 				List<Timeseries.Quote> part = innerGetTimeseries(symbol, newFrom, newTo);
 
-				if (part != null && part.size() > 0)
+				if (part != null)
 				{
 					quotes.addAll(part);
 
-					Long date = null;
-
-					try
-					{
-						date = dateFormat.parse(part.get(part.size() - 1).getDate()).getTime();
-					}
-					catch (ParseException e)
-					{
-						e.printStackTrace();
-					}
+					Long date = getLastDate(part);
 
 					if (date != null)
 					{
@@ -68,29 +59,44 @@ class TimeseriesTemplate extends AbstractTemplate implements TimeseriesOperation
 					else
 					{
 						newTo = newFrom;
+						newTo.add(Calendar.DAY_OF_MONTH, -1);
 					}
 				}
 				else
 				{
 					break;
 				}
-
-				newFrom = (Calendar) newTo.clone();
-				newFrom.add(Calendar.YEAR, -1);
-
-				if (newFrom.compareTo(from) < 0)
-				{
-					newFrom = from;
-				}
 			}
-			while (newTo.compareTo(from) > 0);
+			else
+			{
+				List<Timeseries.Quote> part = innerGetTimeseries(symbol, from, newTo);
 
-			return quotes;
+				if (part != null)
+				{
+					quotes.addAll(part);
+				}
+				break;
+			}
 		}
-		else
+
+		return quotes;
+
+	}
+
+	private Long getLastDate(List<Timeseries.Quote> part)
+	{
+		Long date = null;
+
+		try
 		{
-			return innerGetTimeseries(symbol, from, to);
+			date = dateFormat.parse(part.get(part.size() - 1).getDate()).getTime();
 		}
+		catch (ParseException e)
+		{
+			e.printStackTrace();
+		}
+
+		return date;
 	}
 
 	private List<Quote> innerGetTimeseries(String symbol, Calendar from, Calendar to)

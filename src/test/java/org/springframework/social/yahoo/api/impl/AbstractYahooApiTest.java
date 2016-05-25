@@ -3,13 +3,9 @@ package org.springframework.social.yahoo.api.impl;
 import org.junit.After;
 import org.junit.Before;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.social.yahoo.api.Yahoo;
 
-@ComponentScan(basePackages = "org.springframework.social.yahoo")
-@PropertySource("classpath:application.properties")
 public class AbstractYahooApiTest
 {
 	private AnnotationConfigApplicationContext applicationContext;

@@ -7,8 +7,12 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.junit.Test;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.social.yahoo.api.Timeseries;
 
+@ComponentScan(basePackages = "org.springframework.social.yahoo")
+@PropertySource("classpath:application.properties")
 public class TimeseriesTest extends AbstractYahooApiTest
 {
 	private static final Logger logger = Logger.getLogger(TimeseriesTest.class);
