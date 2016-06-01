@@ -8,6 +8,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 abstract class GenericResultsMixin<T> extends YahooObjectMixin
 {
-	@JsonProperty("quote")
-	List<T> quote;
+    @JsonProperty("quote")
+    List<T> quote;
 }

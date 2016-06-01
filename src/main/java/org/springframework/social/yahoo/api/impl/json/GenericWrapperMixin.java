@@ -8,6 +8,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 abstract class GenericWrapperMixin<T extends GenericQuery<?>> extends YahooObjectMixin
 {
-	@JsonProperty("query")
-	private T query;
+    @JsonProperty("query")
+    private T query;
 }

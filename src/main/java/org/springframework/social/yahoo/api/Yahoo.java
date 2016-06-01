@@ -5,11 +5,11 @@ import org.springframework.web.client.RestOperations;
 
 public interface Yahoo extends ApiBinding
 {
-	TimeseriesOperations timeseriesOperations();
+    TimeseriesOperations timeseriesOperations();
 
-	BriefQuoteOperations briefQuoteOperations();
+    BriefQuoteOperations briefQuoteOperations();
 
-	DetailQuoteOperations detailQuoteOperations();
+    DetailQuoteOperations detailQuoteOperations();
 
-	RestOperations restOperations();
+    RestOperations restOperations();
 }

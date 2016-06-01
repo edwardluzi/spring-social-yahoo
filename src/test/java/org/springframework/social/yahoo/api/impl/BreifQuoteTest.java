@@ -16,14 +16,13 @@ import org.springframework.social.yahoo.api.BriefQuote;
 @PropertySource("classpath:application.properties")
 public class BreifQuoteTest extends AbstractYahooApiTest
 {
-	@Test
-	public void test()
-	{
-		Set<String> symbols = new HashSet<String>(
-				Arrays.asList(new String[] { "GOOG", "000651.SZ" }));
+    @Test
+    public void test()
+    {
+        Set<String> symbols = new HashSet<String>(Arrays.asList(new String[] { "GOOG", "000651.SZ" }));
 
-		List<BriefQuote.Quote> quotes = yahoo.briefQuoteOperations().getQuotes(symbols);
+        List<BriefQuote.Quote> quotes = yahoo.briefQuoteOperations().getQuotes(symbols);
 
-		assertNotNull(quotes);
-	}
+        assertNotNull(quotes);
+    }
 }

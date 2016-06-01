@@ -16,35 +16,35 @@ import org.springframework.social.yahoo.connect.YahooServiceProvider;
 @PropertySource("classpath:application.properties")
 public class ServiceProviderTest
 {
-	private AnnotationConfigApplicationContext applicationContext;
-	private Environment environment;
+    private AnnotationConfigApplicationContext applicationContext;
+    private Environment environment;
 
-	@Before
-	public void setup()
-	{
-		this.applicationContext = new AnnotationConfigApplicationContext(ServiceProviderTest.class);
-		this.environment = this.applicationContext.getEnvironment();
-	}
+    @Before
+    public void setup()
+    {
+        applicationContext = new AnnotationConfigApplicationContext(ServiceProviderTest.class);
+        environment = applicationContext.getEnvironment();
+    }
 
-	@After
-	public void tearDown()
-	{
-		if (this.applicationContext != null)
-		{
-			this.applicationContext.close();
-		}
-	}
+    @After
+    public void tearDown()
+    {
+        if (applicationContext != null)
+        {
+            applicationContext.close();
+        }
+    }
 
-	@Test
-	public void testConnect()
-	{
-		String consumerKey = environment.getProperty("social.yahoo.consumerKey");
-		String consumerSecret = environment.getProperty("social.yahoo.consumerSecret");
+    @Test
+    public void testConnect()
+    {
+        String consumerKey = environment.getProperty("social.yahoo.consumerKey");
+        String consumerSecret = environment.getProperty("social.yahoo.consumerSecret");
 
-		YahooServiceProvider provider = new YahooServiceProvider(consumerKey, consumerSecret);
+        YahooServiceProvider provider = new YahooServiceProvider(consumerKey, consumerSecret);
 
-		OAuthToken requestToken = provider.getOAuthOperations().fetchRequestToken("oob", null);
+        OAuthToken requestToken = provider.getOAuthOperations().fetchRequestToken("oob", null);
 
-		assertNotNull(requestToken);
-	}
+        assertNotNull(requestToken);
+    }
 }

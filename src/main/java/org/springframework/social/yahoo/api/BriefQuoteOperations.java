@@ -5,5 +5,5 @@ import java.util.List;
 
 public interface BriefQuoteOperations
 {
-	List<BriefQuote.Quote> getQuotes(Collection<String> symbols);
+    List<BriefQuote.Quote> getQuotes(Collection<String> symbols);
 }

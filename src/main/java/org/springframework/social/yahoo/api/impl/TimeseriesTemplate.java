@@ -19,124 +19,123 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class TimeseriesTemplate extends AbstractTemplate implements TimeseriesOperations
 {
-	private static final Logger logger = Logger.getLogger(TimeseriesTemplate.class);
+    private static final Logger logger = Logger.getLogger(TimeseriesTemplate.class);
 
-	private static final String sql = "select * from yahoo.finance.historicaldata where symbol = \"%s\" and startDate = \"%s\" and endDate = \"%s\"";
-	private static final String environment = "store://datatables.org/alltableswithkeys";
-	private static final String format = "json";
+    private static final String sql = "select * from yahoo.finance.historicaldata "
+            + "where symbol = \"%s\" and startDate = \"%s\" and endDate = \"%s\"";
+    private static final String environment = "store://datatables.org/alltableswithkeys";
+    private static final String format = "json";
 
-	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-	public TimeseriesTemplate(RestOperations restOperations, ObjectMapper objectMapper,
-			boolean isAuthorized)
-	{
-		super(restOperations, objectMapper, isAuthorized);
-	}
+    public TimeseriesTemplate(RestOperations restOperations, ObjectMapper objectMapper, boolean isAuthorized)
+    {
+        super(restOperations, objectMapper, isAuthorized);
+    }
 
-	public List<Quote> getTimeseries(String symbol, Calendar from, Calendar to)
-	{
-		List<Timeseries.Quote> quotes = new ArrayList<>();
+    @Override
+    public List<Quote> getTimeseries(String symbol, Calendar from, Calendar to)
+    {
+        List<Timeseries.Quote> quotes = new ArrayList<>();
 
-		Calendar newTo = (Calendar) to.clone();
+        Calendar newTo = (Calendar) to.clone();
 
-		for (;;)
-		{
-			if (daysBetween(from, newTo) > 366)
-			{
-				Calendar newFrom = (Calendar) newTo.clone();
-				newFrom.add(Calendar.DAY_OF_MONTH, -300);
+        for (;;)
+        {
+            if (daysBetween(from, newTo) > 366)
+            {
+                Calendar newFrom = (Calendar) newTo.clone();
+                newFrom.add(Calendar.DAY_OF_MONTH, -300);
 
-				List<Timeseries.Quote> part = innerGetTimeseries(symbol, newFrom, newTo);
+                List<Timeseries.Quote> part = innerGetTimeseries(symbol, newFrom, newTo);
 
-				if (part != null)
-				{
-					quotes.addAll(part);
+                if (part != null)
+                {
+                    quotes.addAll(part);
 
-					Long date = getLastDate(part);
+                    Long date = getLastDate(part);
 
-					if (date != null)
-					{
-						newTo.setTimeInMillis(date);
-						newTo.add(Calendar.DAY_OF_MONTH, -1);
-					}
-					else
-					{
-						newTo = newFrom;
-						newTo.add(Calendar.DAY_OF_MONTH, -1);
-					}
-				}
-				else
-				{
-					break;
-				}
-			}
-			else
-			{
-				List<Timeseries.Quote> part = innerGetTimeseries(symbol, from, newTo);
+                    if (date != null)
+                    {
+                        newTo.setTimeInMillis(date);
+                        newTo.add(Calendar.DAY_OF_MONTH, -1);
+                    }
+                    else
+                    {
+                        newTo = newFrom;
+                        newTo.add(Calendar.DAY_OF_MONTH, -1);
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+            else
+            {
+                List<Timeseries.Quote> part = innerGetTimeseries(symbol, from, newTo);
 
-				if (part != null)
-				{
-					quotes.addAll(part);
-				}
-				break;
-			}
-		}
+                if (part != null)
+                {
+                    quotes.addAll(part);
+                }
+                break;
+            }
+        }
 
-		return quotes;
+        return quotes;
 
-	}
+    }
 
-	private Long getLastDate(List<Timeseries.Quote> part)
-	{
-		Long date = null;
+    private Long getLastDate(List<Timeseries.Quote> part)
+    {
+        Long date = null;
 
-		try
-		{
-			date = dateFormat.parse(part.get(part.size() - 1).getDate()).getTime();
-		}
-		catch (ParseException e)
-		{
-			logger.error(e);
-		}
+        try
+        {
+            date = dateFormat.parse(part.get(part.size() - 1).getDate()).getTime();
+        }
+        catch (ParseException e)
+        {
+            logger.error(e);
+        }
 
-		return date;
-	}
+        return date;
+    }
 
-	private List<Quote> innerGetTimeseries(String symbol, Calendar from, Calendar to)
-	{
+    private List<Quote> innerGetTimeseries(String symbol, Calendar from, Calendar to)
+    {
 
-		String query = String.format(sql, symbol, dateFormat.format(from.getTime()),
-				dateFormat.format(to.getTime()));
+        String query = String.format(sql, symbol, dateFormat.format(from.getTime()), dateFormat.format(to.getTime()));
 
-		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
-		params.add("q", query);
-		params.add("env", environment);
-		params.add("format", format);
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+        params.add("q", query);
+        params.add("env", environment);
+        params.add("format", format);
 
-		Timeseries.Wrapper wrapper = this.getRestOperations().getForObject(buildUri(params),
-				Timeseries.Wrapper.class);
+        Timeseries.Wrapper wrapper = getRestOperations().getForObject(buildUri(params), Timeseries.Wrapper.class);
 
-		List<Timeseries.Quote> quotes = null;
+        List<Timeseries.Quote> quotes = null;
 
-		try
-		{
-			Query q = wrapper.getQuery();
+        try
+        {
+            Query q = wrapper.getQuery();
 
-			if (q.getCount() > 0)
-			{
-				quotes = q.getResults().getQuote();
-			}
-		}
-		catch (Exception e)
-		{
-			logger.error(e);
-		}
+            if (q.getCount() > 0)
+            {
+                quotes = q.getResults().getQuote();
+            }
+        }
+        catch (Exception e)
+        {
+            logger.error(e);
+        }
 
-		return quotes;
-	}
+        return quotes;
+    }
 
-	private int daysBetween(Calendar calendar1, Calendar calendar2)
-	{
-		return (int) ((calendar2.getTimeInMillis() - calendar1.getTimeInMillis()) / (1000 * 60 * 60 * 24));
-	}
+    private int daysBetween(Calendar calendar1, Calendar calendar2)
+    {
+        return (int) ((calendar2.getTimeInMillis() - calendar1.getTimeInMillis()) / (1000 * 60 * 60 * 24));
+    }
 }

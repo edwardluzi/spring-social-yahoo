@@ -5,5 +5,5 @@ import java.util.List;
 
 public interface TimeseriesOperations
 {
-	List<Timeseries.Quote> getTimeseries(String symbol, Calendar from, Calendar to);
+    List<Timeseries.Quote> getTimeseries(String symbol, Calendar from, Calendar to);
 }

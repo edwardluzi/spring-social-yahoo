@@ -11,40 +11,39 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public abstract class AbstractTemplate
 {
-	private static final String API_URL_BASE = "http://query.yahooapis.com/v1/yql";
+    private static final String API_URL_BASE = "http://query.yahooapis.com/v1/yql";
 
-	private final RestOperations restOperations;
-	private final ObjectMapper objectMapper;
-	private final boolean isAuthorized;
+    private final RestOperations restOperations;
+    private final ObjectMapper objectMapper;
+    private final boolean isAuthorized;
 
-	protected RestOperations getRestOperations()
-	{
-		return restOperations;
-	}
+    protected RestOperations getRestOperations()
+    {
+        return restOperations;
+    }
 
-	protected ObjectMapper getObjectMapper()
-	{
-		return objectMapper;
-	}
+    protected ObjectMapper getObjectMapper()
+    {
+        return objectMapper;
+    }
 
-	protected AbstractTemplate(RestOperations restOperations, ObjectMapper objectMapper,
-			boolean isAuthorized)
-	{
-		this.restOperations = restOperations;
-		this.objectMapper = objectMapper;
-		this.isAuthorized = isAuthorized;
-	}
+    protected AbstractTemplate(RestOperations restOperations, ObjectMapper objectMapper, boolean isAuthorized)
+    {
+        this.restOperations = restOperations;
+        this.objectMapper = objectMapper;
+        this.isAuthorized = isAuthorized;
+    }
 
-	protected void requireAuthorization()
-	{
-		if (!isAuthorized)
-		{
-			throw new MissingAuthorizationException("yahoo");
-		}
-	}
+    protected void requireAuthorization()
+    {
+        if (!isAuthorized)
+        {
+            throw new MissingAuthorizationException("yahoo");
+        }
+    }
 
-	protected URI buildUri(MultiValueMap<String, String> params)
-	{
-		return URIBuilder.fromUri(API_URL_BASE).queryParams(params).build();
-	}
+    protected URI buildUri(MultiValueMap<String, String> params)
+    {
+        return URIBuilder.fromUri(API_URL_BASE).queryParams(params).build();
+    }
 }

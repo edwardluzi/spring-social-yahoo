@@ -16,14 +16,13 @@ import org.springframework.social.yahoo.api.DetailQuote;
 @PropertySource("classpath:application.properties")
 public class DetailQuoteTest extends AbstractYahooApiTest
 {
-	@Test
-	public void test()
-	{
-		Set<String> symbols = new HashSet<String>(
-				Arrays.asList(new String[] { "GOOG", "000651.SZ" }));
+    @Test
+    public void test()
+    {
+        Set<String> symbols = new HashSet<String>(Arrays.asList(new String[] { "GOOG", "000651.SZ" }));
 
-		List<DetailQuote.Quote> quotes = yahoo.detailQuoteOperations().getQuotes(symbols);
+        List<DetailQuote.Quote> quotes = yahoo.detailQuoteOperations().getQuotes(symbols);
 
-		assertNotNull(quotes);
-	}
+        assertNotNull(quotes);
+    }
 }

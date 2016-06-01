@@ -8,33 +8,33 @@ import org.springframework.social.yahoo.api.Yahoo;
 
 public class AbstractYahooApiTest
 {
-	private AnnotationConfigApplicationContext applicationContext;
-	private Environment environment;
+    private AnnotationConfigApplicationContext applicationContext;
+    private Environment environment;
 
-	protected Yahoo yahoo;
+    protected Yahoo yahoo;
 
-	@Before
-	public void setup()
-	{
-		this.applicationContext = new AnnotationConfigApplicationContext(AbstractYahooApiTest.class);
-		this.environment = this.applicationContext.getEnvironment();
+    @Before
+    public void setup()
+    {
+        applicationContext = new AnnotationConfigApplicationContext(AbstractYahooApiTest.class);
+        environment = applicationContext.getEnvironment();
 
-		this.yahoo = createYahooTemplate();
-	}
+        yahoo = createYahooTemplate();
+    }
 
-	@After
-	public void tearDown()
-	{
-		if (this.applicationContext != null)
-		{
-			this.applicationContext.close();
-		}
-	}
+    @After
+    public void tearDown()
+    {
+        if (applicationContext != null)
+        {
+            applicationContext.close();
+        }
+    }
 
-	protected Yahoo createYahooTemplate()
-	{
-		String consumerKey = environment.getProperty("social.yahoo.consumerKey");
-		String consumerSecret = environment.getProperty("social.yahoo.consumerSecret");
-		return new YahooTemplate(consumerKey, consumerSecret, "", "");
-	}
+    protected Yahoo createYahooTemplate()
+    {
+        String consumerKey = environment.getProperty("social.yahoo.consumerKey");
+        String consumerSecret = environment.getProperty("social.yahoo.consumerSecret");
+        return new YahooTemplate(consumerKey, consumerSecret, "", "");
+    }
 }
