@@ -25,6 +25,8 @@ public class BriefQuoteMixin
     @JsonIgnoreProperties(ignoreUnknown = true)
     abstract class QuoteMixin extends YahooObjectMixin
     {
+        // CHECKSTYLE:OFF
+
         @JsonProperty("symbol")
         String symbol;
         @JsonProperty("AverageDailyVolume")
@@ -53,5 +55,7 @@ public class BriefQuoteMixin
         double Volume;
         @JsonProperty("StockExchange")
         String StockExchange;
+
+        // CHECKSTYLE:ON
     }
 }

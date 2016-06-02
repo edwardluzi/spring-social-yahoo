@@ -19,14 +19,22 @@ public class YahooErrorHandler extends DefaultResponseErrorHandler
     @Override
     public void handleError(ClientHttpResponse response) throws IOException
     {
+        Map<String, Object> errorDetails = null;
+        String errorMessage = "Unknown error";
         HttpStatus statusCode = response.getStatusCode();
-        Map<String, Object> errorDetails = extractErrorDetailsFromResponse(response);
+
+        if (response.getHeaders().getContentLength() > 0)
+        {
+            errorDetails = extractErrorDetailsFromResponse(response);
+        }
+        else
+        {
+            errorMessage = response.getStatusText();
+        }
 
         if (statusCode.series().equals(HttpStatus.Series.CLIENT_ERROR))
         {
-            String errorMessage = "Unknown error";
-
-            if (errorDetails.containsKey("error"))
+            if (errorDetails != null && errorDetails.containsKey("error"))
             {
                 Object errorObject = errorDetails.get("error");
 
@@ -34,7 +42,6 @@ public class YahooErrorHandler extends DefaultResponseErrorHandler
                 {
                     errorMessage = errorObject.toString();
                 }
-
                 else if (errorObject instanceof Map)
                 {
                     ObjectMapper om = new ObjectMapper();
@@ -68,6 +75,7 @@ public class YahooErrorHandler extends DefaultResponseErrorHandler
         }
     }
 
+    @SuppressWarnings({ "checkstyle:GenericWhitespace" })
     private Map<String, Object> extractErrorDetailsFromResponse(ClientHttpResponse response) throws IOException
     {
         ObjectMapper mapper = new ObjectMapper(new JsonFactory());

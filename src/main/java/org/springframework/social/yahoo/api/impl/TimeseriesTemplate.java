@@ -42,14 +42,14 @@ public class TimeseriesTemplate extends AbstractTemplate implements TimeseriesOp
 
         for (;;)
         {
-            if (daysBetween(from, newTo) > 366)
+            if (daysBetween(from, newTo) > 450)
             {
                 Calendar newFrom = (Calendar) newTo.clone();
-                newFrom.add(Calendar.DAY_OF_MONTH, -300);
+                newFrom.add(Calendar.DAY_OF_MONTH, -400);
 
                 List<Timeseries.Quote> part = innerGetTimeseries(symbol, newFrom, newTo);
 
-                if (part != null)
+                if (part != null && part.size() > 0)
                 {
                     quotes.addAll(part);
 
@@ -65,6 +65,15 @@ public class TimeseriesTemplate extends AbstractTemplate implements TimeseriesOp
                         newTo = newFrom;
                         newTo.add(Calendar.DAY_OF_MONTH, -1);
                     }
+
+                    try
+                    {
+                        Thread.sleep(1000);
+                    }
+                    catch (InterruptedException e)
+                    {
+                        logger.error(e);
+                    }
                 }
                 else
                 {
@@ -79,6 +88,7 @@ public class TimeseriesTemplate extends AbstractTemplate implements TimeseriesOp
                 {
                     quotes.addAll(part);
                 }
+
                 break;
             }
         }
@@ -105,7 +115,6 @@ public class TimeseriesTemplate extends AbstractTemplate implements TimeseriesOp
 
     private List<Quote> innerGetTimeseries(String symbol, Calendar from, Calendar to)
     {
-
         String query = String.format(sql, symbol, dateFormat.format(from.getTime()), dateFormat.format(to.getTime()));
 
         MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
@@ -119,11 +128,11 @@ public class TimeseriesTemplate extends AbstractTemplate implements TimeseriesOp
 
         try
         {
-            Query q = wrapper.getQuery();
+            Query queryObject = wrapper.getQuery();
 
-            if (q.getCount() > 0)
+            if (queryObject.getCount() > 0)
             {
-                quotes = q.getResults().getQuote();
+                quotes = queryObject.getResults().getQuote();
             }
         }
         catch (Exception e)

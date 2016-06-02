@@ -25,6 +25,8 @@ public class DetailQuoteMixin
     @JsonIgnoreProperties(ignoreUnknown = true)
     abstract class QuoteMixin extends YahooObjectMixin
     {
+        // CHECKSTYLE:OFF
+
         @JsonProperty("symbol")
         String symbol;
         @JsonProperty("Ask")
@@ -191,5 +193,7 @@ public class DetailQuoteMixin
         String DividendYield;
         @JsonProperty("PercentChange")
         String PercentChange;
+
+        // CHECKSTYLE:ON
     }
 }

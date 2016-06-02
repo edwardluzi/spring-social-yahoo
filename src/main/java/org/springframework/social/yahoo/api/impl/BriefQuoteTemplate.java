@@ -60,11 +60,11 @@ public class BriefQuoteTemplate extends AbstractTemplate implements BriefQuoteOp
 
         try
         {
-            BriefQuote.Query q = wrapper.getQuery();
+            BriefQuote.Query queryObject = wrapper.getQuery();
 
-            if (q.getCount() > 0)
+            if (queryObject.getCount() > 0)
             {
-                quotes = q.getResults().getQuote();
+                quotes = queryObject.getResults().getQuote();
             }
         }
         catch (Exception e)

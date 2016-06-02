@@ -25,6 +25,7 @@ public interface BriefQuote
 
         private String symbol;
 
+        // CHECKSTYLE:OFF
         private double AverageDailyVolume;
 
         private double Change;
@@ -49,6 +50,8 @@ public interface BriefQuote
 
         private String StockExchange;
 
+        // CHECKSTYLE:ON
+
         public String getSymbol()
         {
             return symbol;
@@ -64,9 +67,9 @@ public interface BriefQuote
             return AverageDailyVolume;
         }
 
-        public void setAverageDailyVolume(double AverageDailyVolume)
+        public void setAverageDailyVolume(double averageDailyVolume)
         {
-            this.AverageDailyVolume = AverageDailyVolume;
+            this.AverageDailyVolume = averageDailyVolume;
         }
 
         public double getChange()
@@ -74,9 +77,9 @@ public interface BriefQuote
             return Change;
         }
 
-        public void setChange(double Change)
+        public void setChange(double change)
         {
-            this.Change = Change;
+            this.Change = change;
         }
 
         public double getDaysLow()
@@ -84,9 +87,9 @@ public interface BriefQuote
             return DaysLow;
         }
 
-        public void setDaysLow(double DaysLow)
+        public void setDaysLow(double daysLow)
         {
-            this.DaysLow = DaysLow;
+            this.DaysLow = daysLow;
         }
 
         public double getDaysHigh()
@@ -94,9 +97,9 @@ public interface BriefQuote
             return DaysHigh;
         }
 
-        public void setDaysHigh(double DaysHigh)
+        public void setDaysHigh(double daysHigh)
         {
-            this.DaysHigh = DaysHigh;
+            this.DaysHigh = daysHigh;
         }
 
         public double getYearLow()
@@ -104,9 +107,9 @@ public interface BriefQuote
             return YearLow;
         }
 
-        public void setYearLow(double YearLow)
+        public void setYearLow(double yearLow)
         {
-            this.YearLow = YearLow;
+            this.YearLow = yearLow;
         }
 
         public double getYearHigh()
@@ -114,9 +117,9 @@ public interface BriefQuote
             return YearHigh;
         }
 
-        public void setYearHigh(double YearHigh)
+        public void setYearHigh(double yearHigh)
         {
-            this.YearHigh = YearHigh;
+            this.YearHigh = yearHigh;
         }
 
         public String getMarketCapitalization()
@@ -124,9 +127,9 @@ public interface BriefQuote
             return MarketCapitalization;
         }
 
-        public void setMarketCapitalization(String MarketCapitalization)
+        public void setMarketCapitalization(String marketCapitalization)
         {
-            this.MarketCapitalization = MarketCapitalization;
+            this.MarketCapitalization = marketCapitalization;
         }
 
         public double getLastTradePriceOnly()
@@ -134,9 +137,9 @@ public interface BriefQuote
             return LastTradePriceOnly;
         }
 
-        public void setLastTradePriceOnly(double LastTradePriceOnly)
+        public void setLastTradePriceOnly(double lastTradePriceOnly)
         {
-            this.LastTradePriceOnly = LastTradePriceOnly;
+            this.LastTradePriceOnly = lastTradePriceOnly;
         }
 
         public String getDaysRange()
@@ -144,9 +147,9 @@ public interface BriefQuote
             return DaysRange;
         }
 
-        public void setDaysRange(String DaysRange)
+        public void setDaysRange(String daysRange)
         {
-            this.DaysRange = DaysRange;
+            this.DaysRange = daysRange;
         }
 
         public String getName()
@@ -154,9 +157,9 @@ public interface BriefQuote
             return Name;
         }
 
-        public void setName(String Name)
+        public void setName(String name)
         {
-            this.Name = Name;
+            this.Name = name;
         }
 
         public double getVolume()
@@ -164,9 +167,9 @@ public interface BriefQuote
             return Volume;
         }
 
-        public void setVolume(double Volume)
+        public void setVolume(double volume)
         {
-            this.Volume = Volume;
+            this.Volume = volume;
         }
 
         public String getStockExchange()
@@ -174,9 +177,9 @@ public interface BriefQuote
             return StockExchange;
         }
 
-        public void setStockExchange(String StockExchange)
+        public void setStockExchange(String stockExchange)
         {
-            this.StockExchange = StockExchange;
+            this.StockExchange = stockExchange;
         }
     }
 }

@@ -60,11 +60,11 @@ public class DetailQuoteTemplate extends AbstractTemplate implements DetailQuote
 
         try
         {
-            DetailQuote.Query q = wrapper.getQuery();
+            DetailQuote.Query queryObject = wrapper.getQuery();
 
-            if (q.getCount() > 0)
+            if (queryObject.getCount() > 0)
             {
-                quotes = q.getResults().getQuote();
+                quotes = queryObject.getResults().getQuote();
             }
         }
         catch (Exception e)

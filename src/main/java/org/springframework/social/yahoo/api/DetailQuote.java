@@ -25,6 +25,8 @@ public interface DetailQuote
 
         private String symbol;
 
+        // CHECKSTYLE:OFF
+
         private double Ask;
 
         private double AverageDailyVolume;
@@ -186,6 +188,8 @@ public interface DetailQuote
         private String DividendYield;
 
         private String PercentChange;
+
+        // CHECKSTYLE:ON
 
         public String getSymbol()
         {
@@ -368,14 +372,16 @@ public interface DetailQuote
             ErrorIndicationreturnedforsymbolchangedinvalid = errorIndicationreturnedforsymbolchangedinvalid;
         }
 
+        // CHECKSTYLE:OFF
+
         public double getEPSEstimateCurrentYear()
         {
             return EPSEstimateCurrentYear;
         }
 
-        public void setEPSEstimateCurrentYear(double ePSEstimateCurrentYear)
+        public void setEPSEstimateCurrentYear(double epsEstimateCurrentYear)
         {
-            EPSEstimateCurrentYear = ePSEstimateCurrentYear;
+            EPSEstimateCurrentYear = epsEstimateCurrentYear;
         }
 
         public double getEPSEstimateNextYear()
@@ -383,9 +389,9 @@ public interface DetailQuote
             return EPSEstimateNextYear;
         }
 
-        public void setEPSEstimateNextYear(double ePSEstimateNextYear)
+        public void setEPSEstimateNextYear(double epsEstimateNextYear)
         {
-            EPSEstimateNextYear = ePSEstimateNextYear;
+            EPSEstimateNextYear = epsEstimateNextYear;
         }
 
         public double getEPSEstimateNextQuarter()
@@ -393,10 +399,12 @@ public interface DetailQuote
             return EPSEstimateNextQuarter;
         }
 
-        public void setEPSEstimateNextQuarter(double ePSEstimateNextQuarter)
+        public void setEPSEstimateNextQuarter(double epsEstimateNextQuarter)
         {
-            EPSEstimateNextQuarter = ePSEstimateNextQuarter;
+            EPSEstimateNextQuarter = epsEstimateNextQuarter;
         }
+
+        // CHECKSTYLE:ON
 
         public double getDaysLow()
         {
@@ -528,15 +536,19 @@ public interface DetailQuote
             MarketCapRealtime = marketCapRealtime;
         }
 
+        // CHECKSTYLE:OFF
+
         public String getEBITDA()
         {
             return EBITDA;
         }
 
-        public void setEBITDA(String eBITDA)
+        public void setEBITDA(String ebitda)
         {
-            EBITDA = eBITDA;
+            EBITDA = ebitda;
         }
+
+        // CHECKSTYLE:ON
 
         public double getChangeFromYearLow()
         {
@@ -808,14 +820,16 @@ public interface DetailQuote
             ExDividendDate = exDividendDate;
         }
 
+        // CHECKSTYLE:OFF
+
         public double getPERatio()
         {
             return PERatio;
         }
 
-        public void setPERatio(double pERatio)
+        public void setPERatio(double peRatio)
         {
-            PERatio = pERatio;
+            PERatio = peRatio;
         }
 
         public String getDividendPayDate()
@@ -833,9 +847,9 @@ public interface DetailQuote
             return PERatioRealtime;
         }
 
-        public void setPERatioRealtime(Object pERatioRealtime)
+        public void setPERatioRealtime(Object peRatioRealtime)
         {
-            PERatioRealtime = pERatioRealtime;
+            PERatioRealtime = peRatioRealtime;
         }
 
         public double getPEGRatio()
@@ -843,9 +857,9 @@ public interface DetailQuote
             return PEGRatio;
         }
 
-        public void setPEGRatio(double pEGRatio)
+        public void setPEGRatio(double pegRatio)
         {
-            PEGRatio = pEGRatio;
+            PEGRatio = pegRatio;
         }
 
         public double getPriceEPSEstimateCurrentYear()
@@ -853,9 +867,9 @@ public interface DetailQuote
             return PriceEPSEstimateCurrentYear;
         }
 
-        public void setPriceEPSEstimateCurrentYear(double priceEPSEstimateCurrentYear)
+        public void setPriceEPSEstimateCurrentYear(double priceEpsEstimateCurrentYear)
         {
-            PriceEPSEstimateCurrentYear = priceEPSEstimateCurrentYear;
+            PriceEPSEstimateCurrentYear = priceEpsEstimateCurrentYear;
         }
 
         public double getPriceEPSEstimateNextYear()
@@ -863,10 +877,12 @@ public interface DetailQuote
             return PriceEPSEstimateNextYear;
         }
 
-        public void setPriceEPSEstimateNextYear(double priceEPSEstimateNextYear)
+        public void setPriceEPSEstimateNextYear(double priceEpsEstimateNextYear)
         {
-            PriceEPSEstimateNextYear = priceEPSEstimateNextYear;
+            PriceEPSEstimateNextYear = priceEpsEstimateNextYear;
         }
+
+        // CHECKSTYLE:ON
 
         public Object getSharesOwned()
         {
