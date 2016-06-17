@@ -1,6 +1,13 @@
 package org.springframework.social.yahoo.api.impl;
 
+import java.lang.reflect.Field;
+
+import org.apache.log4j.Logger;
+import org.springframework.http.client.AbstractClientHttpRequestFactoryWrapper;
 import org.springframework.http.client.ClientHttpRequestFactory;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.client.InterceptingClientHttpRequestFactory;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.social.oauth1.AbstractOAuth1ApiBinding;
 import org.springframework.social.support.ClientHttpRequestFactorySelector;
@@ -16,6 +23,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class YahooTemplate extends AbstractOAuth1ApiBinding implements Yahoo
 {
+    private static final Logger logger = Logger.getLogger(YahooTemplate.class);
+
     private TimeseriesOperations timeseriesOperations;
     private BriefQuoteOperations briefQuoteOperations;
     private DetailQuoteOperations detailQuoteOperations;
@@ -73,6 +82,9 @@ public class YahooTemplate extends AbstractOAuth1ApiBinding implements Yahoo
     protected void configureRestTemplate(RestTemplate restTemplate)
     {
         super.configureRestTemplate(restTemplate);
+
+        setReadTimeout(getRestTemplate().getRequestFactory());
+
         restTemplate.setErrorHandler(new YahooErrorHandler());
     }
 
@@ -86,6 +98,53 @@ public class YahooTemplate extends AbstractOAuth1ApiBinding implements Yahoo
         return converter;
     }
 
+    private void setReadTimeout(ClientHttpRequestFactory requestFactory)
+    {
+        if (requestFactory instanceof SimpleClientHttpRequestFactory)
+        {
+            ((SimpleClientHttpRequestFactory) requestFactory).setReadTimeout(60 * 1000);
+        }
+        else if (requestFactory instanceof HttpComponentsClientHttpRequestFactory)
+        {
+            ((HttpComponentsClientHttpRequestFactory) requestFactory).setReadTimeout(60 * 1000);
+        }
+        else if (requestFactory instanceof InterceptingClientHttpRequestFactory)
+        {
+            Field requestFactoryfield = null;
+            try
+            {
+                requestFactoryfield = AbstractClientHttpRequestFactoryWrapper.class.getDeclaredField("requestFactory");
+            }
+            catch (NoSuchFieldException e)
+            {
+                logger.error(e);
+            }
+            catch (SecurityException e)
+            {
+                logger.error(e);
+            }
+
+            if (requestFactoryfield != null)
+            {
+                requestFactoryfield.setAccessible(true);
+                ClientHttpRequestFactory childRequestFactory = null;
+                try
+                {
+                    childRequestFactory = (ClientHttpRequestFactory) requestFactoryfield.get(requestFactory);
+                }
+                catch (IllegalArgumentException | IllegalAccessException e)
+                {
+                    logger.error(e);
+                }
+
+                if (childRequestFactory != null)
+                {
+                    setReadTimeout(childRequestFactory);
+                }
+            }
+        }
+    }
+
     private void initialize()
     {
         // Wrap the request factory with a BufferingClientHttpRequestFactory so
@@ -97,9 +156,7 @@ public class YahooTemplate extends AbstractOAuth1ApiBinding implements Yahoo
     private void initSubApis()
     {
         timeseriesOperations = new TimeseriesTemplate(getRestTemplate(), objectMapper, isAuthorized());
-
         briefQuoteOperations = new BriefQuoteTemplate(getRestTemplate(), objectMapper, isAuthorized());
-
         detailQuoteOperations = new DetailQuoteTemplate(getRestTemplate(), objectMapper, isAuthorized());
     }
 

@@ -49,35 +49,42 @@ public class TimeseriesTemplate extends AbstractTemplate implements TimeseriesOp
 
                 List<Timeseries.Quote> part = innerGetTimeseries(symbol, newFrom, newTo);
 
-                if (part != null && part.size() > 0)
+                if (part != null)
                 {
-                    quotes.addAll(part);
-
-                    Long date = getLastDate(part);
-
-                    if (date != null)
+                    if (part.size() > 0)
                     {
-                        newTo.setTimeInMillis(date);
-                        newTo.add(Calendar.DAY_OF_MONTH, -1);
+                        quotes.addAll(part);
+
+                        Long date = getLastDate(part);
+
+                        if (date != null)
+                        {
+                            newTo.setTimeInMillis(date);
+                            newTo.add(Calendar.DAY_OF_MONTH, -1);
+                        }
+                        else
+                        {
+                            newTo = newFrom;
+                            newTo.add(Calendar.DAY_OF_MONTH, -1);
+                        }
+
+                        try
+                        {
+                            Thread.sleep(3000);
+                        }
+                        catch (InterruptedException e)
+                        {
+                            logger.error(e);
+                        }
                     }
                     else
                     {
-                        newTo = newFrom;
-                        newTo.add(Calendar.DAY_OF_MONTH, -1);
-                    }
-
-                    try
-                    {
-                        Thread.sleep(1000);
-                    }
-                    catch (InterruptedException e)
-                    {
-                        logger.error(e);
+                        break;
                     }
                 }
                 else
                 {
-                    break;
+                    return null;
                 }
             }
             else
@@ -89,12 +96,13 @@ public class TimeseriesTemplate extends AbstractTemplate implements TimeseriesOp
                     quotes.addAll(part);
                 }
 
+                logger.debug("All are done.");
+
                 break;
             }
         }
 
         return quotes;
-
     }
 
     private Long getLastDate(List<Timeseries.Quote> part)
@@ -122,22 +130,35 @@ public class TimeseriesTemplate extends AbstractTemplate implements TimeseriesOp
         params.add("env", environment);
         params.add("format", format);
 
-        Timeseries.Wrapper wrapper = getRestOperations().getForObject(buildUri(params), Timeseries.Wrapper.class);
-
+        int count = 0;
         List<Timeseries.Quote> quotes = null;
 
-        try
+        while (count++ < 3)
         {
-            Query queryObject = wrapper.getQuery();
-
-            if (queryObject.getCount() > 0)
+            try
             {
-                quotes = queryObject.getResults().getQuote();
+                logger.debug("innerGetTimeseries " + symbol);
+
+                Timeseries.Wrapper wrapper = getRestOperations().getForObject(buildUri(params),
+                        Timeseries.Wrapper.class);
+
+                Query queryObject = wrapper.getQuery();
+
+                if (queryObject.getCount() > 0)
+                {
+                    quotes = queryObject.getResults().getQuote();
+                }
+                else
+                {
+                    quotes = new ArrayList<>();
+                }
+
+                break;
             }
-        }
-        catch (Exception e)
-        {
-            logger.error(e);
+            catch (Exception e)
+            {
+                logger.error(e);
+            }
         }
 
         return quotes;

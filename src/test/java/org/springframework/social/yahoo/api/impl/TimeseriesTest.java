@@ -34,9 +34,9 @@ public class TimeseriesTest extends AbstractYahooApiTest
     {
         Calendar to = Calendar.getInstance();
         Calendar from = (Calendar) to.clone();
-        from.add(Calendar.YEAR, -3);
+        from.add(Calendar.YEAR, -15);
 
-        List<Timeseries.Quote> quotes = yahoo.timeseriesOperations().getTimeseries("000001.SZ", from, to);
+        List<Timeseries.Quote> quotes = yahoo.timeseriesOperations().getTimeseries("600737.SS", from, to);
 
         assertNotNull(quotes);
 
